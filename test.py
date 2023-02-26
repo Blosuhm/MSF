@@ -1,5 +1,6 @@
 from modules.linear_regression import linear_regression, plot_regression_line
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -17,17 +18,11 @@ def main():
         ]
     )
 
-    N = array.size
-    sum_xy = np.sum(array[:, 0] * array[:, 1])
-    sum_x = np.sum(array[:, 0])
-    sum_y = np.sum(array[:, 1])
-    sum_x2 = np.sum(array[:, 0] ** 2)
-    sum_y2 = np.sum(array[:, 1] ** 2)
-    slope = (N * sum_xy - sum_x * sum_y) / (N * sum_x2 - sum_x**2)
-
     print(slope)
-    slope, intercept = linear_regression(array)
-    plot_regression_line(array, slope, intercept)
+    # slope, intercept = linear_regression(array)
+    # plot_regression_line(array, slope, intercept)
+    m, b = np.polyfit(array[:, 0], array[:, 1], 1)
+    plot_regression_line(array, m, b)
 
 
 if __name__ == "__main__":

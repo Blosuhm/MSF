@@ -4,12 +4,17 @@ import matplotlib.pyplot as plt
 
 def linear_regression(array: list[tuple]):
     """Returns the slope and intercept of a linear regression line."""
-    x = np.array([i[0] for i in array])
-    y = np.array([i[1] for i in array])
-    slope = (np.mean(x) * np.mean(y) - np.mean(x * y)) / (
-        np.mean(x) ** 2 - np.mean(x**2)
-    )
-    intercept = np.mean(y) - slope * np.mean(x)
+    N = array.size
+    sum_xy = np.sum(array[:, 0] * array[:, 1])
+    sum_x = np.sum(array[:, 0])
+    sum_y = np.sum(array[:, 1])
+    sum_x2 = np.sum(array[:, 0] ** 2)
+    sum_y2 = np.sum(array[:, 1] ** 2)
+    slope = (N * sum_xy - sum_x * sum_y) / (N * sum_x2 - sum_x**2)
+
+    # TODO: Fix intercept
+    # intercept = np.mean(y) - slope * np.mean(x)
+    intercept = 0
     return slope, intercept
 
 
