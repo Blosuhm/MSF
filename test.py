@@ -18,7 +18,6 @@ def main():
         ]
     )
 
-    print(slope)
     # slope, intercept = linear_regression(array)
     # plot_regression_line(array, slope, intercept)
     m, b = np.polyfit(array[:, 0], array[:, 1], 1)
