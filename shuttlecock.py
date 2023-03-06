@@ -9,15 +9,6 @@ TERMINAL_VELOCITY_MS = 6.8
 g = 9.8
 
 
-def plot(x_array, y_array, *, title, x_label, y_label):
-    plt.subplot(210 + next(id_gen))
-    plt.plot(x_array, y_array)
-    plt.xlabel(x_label)
-    plt.ylabel(y_label)
-    plt.title(title)
-    plt.grid(True)
-
-
 def position(domain=np.linspace(0, 10, 100)):
     vt, t = sp.symbols("vt t")
     y = sp.Pow(vt, 2) / (g) * sp.log(sp.cosh(g * t / vt))
