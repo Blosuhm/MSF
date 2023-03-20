@@ -12,15 +12,19 @@ GRAVITY_MS2 = 9.8
 
 
 # Sympy
-t = sp.Symbol("t")
+t, g, v_terminal = sp.symbols("t g v_terminal")
 
-position = (math.pow(TERMINAL_VELOCITY_MS, 2) / GRAVITY_MS2) * sp.log(
-    sp.cosh(GRAVITY_MS2 * t / TERMINAL_VELOCITY_MS)
-)
+position = (sp.Pow(v_terminal, 2) / g) * sp.log(sp.cosh(g * t / v_terminal))
+velocity = sp.diff(position, t)
+acceleration = sp.diff(velocity, t)
 
 
 def graph_position(ax):
-    position_array = sp.lambdify(t, position, "numpy")(TIME)
+    position_array = sp.lambdify(
+        t,
+        position.subs([(g, GRAVITY_MS2), (v_terminal, TERMINAL_VELOCITY_MS)]),
+        "numpy",
+    )(TIME)
 
     ax.plot(
         TIME,
@@ -33,8 +37,11 @@ def graph_position(ax):
 
 
 def graph_velocity(ax):
-    velocity = sp.diff(position, t)
-    velocity_array = sp.lambdify(t, velocity, "numpy")(TIME)
+    velocity_array = sp.lambdify(
+        t,
+        velocity.subs([(g, GRAVITY_MS2), (v_terminal, TERMINAL_VELOCITY_MS)]),
+        "numpy",
+    )(TIME)
 
     ax.plot(
         TIME,
@@ -46,10 +53,30 @@ def graph_velocity(ax):
     ax.set_xlabel("Time (s)")
 
 
+def graph_acceleration(ax):
+    acceleration_array = sp.lambdify(
+        t,
+        acceleration.subs([(g, GRAVITY_MS2), (v_terminal, TERMINAL_VELOCITY_MS)]),
+        "numpy",
+    )(TIME)
+
+    ax.plot(
+        TIME,
+        acceleration_array,
+    )
+    ax.set_xlim(0, X_LIM)
+    ax.set_ylim(0, Y_LIM)
+    ax.set_ylabel("Acceleration (m/s^2)")
+    ax.set_xlabel("Time (s)")
+
+
 def main():
     fig, ax = plt.subplots(nrows=1, ncols=1)
+    sp.pprint(acceleration)
+    sp.pprint(velocity)
     graph_position(ax)
     graph_velocity(ax)
+    graph_acceleration(ax)
 
     plt.show()
 
