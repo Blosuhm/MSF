@@ -19,3 +19,25 @@ def linear_regression(array):
     )
 
     return slope, intercept, r2
+
+
+def get_r_squared(x, y, slope, intercept):
+    """Returns the r-squared value of a linear regression line."""
+    y_pred = slope * x + intercept
+    r_squared = 1 - (np.sum(np.power(y - y_pred, 2)) / ((len(y) - 1) * np.var(y)))
+    return r_squared
+
+
+def get_delta_slope(x, y, slope, intercept):
+    """Returns the delta slope of a linear regression line."""
+    y_pred = slope * x + intercept
+    delta_m = np.sqrt(np.sum(np.power(y_pred - y, 2)) / (len(x) - 2)) / np.sqrt(
+        np.sum(np.power(x - np.mean(x), 2))
+    )
+    return delta_m
+
+
+def get_delta_intercept(x, delta_m):
+    """Returns the delta intercept of a linear regression line."""
+    delta_b = delta_m * np.sqrt(np.sum(np.power(x, 2)) / len(x))
+    return delta_b
