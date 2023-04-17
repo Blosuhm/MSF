@@ -1,3 +1,4 @@
+# Vertical throw of a ball with air resistance and terminal velocity
 import numpy as np
 import matplotlib.pyplot as plt
 import math

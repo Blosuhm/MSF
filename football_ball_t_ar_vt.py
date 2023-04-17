@@ -45,7 +45,19 @@ def get_x_position():
     for i in range(1, N):
         current_velocity = previous_velocity + acceleration_x_ms2 * TIME_STEP
         array_position[i] = array_position[i - 1] + current_velocity * TIME_STEP
-        previous_velocity = current_velocity END_TIM
+        previous_velocity = current_velocity
+    return array_position
+
+
+def get_y_position():
+    array_position = np.zeros(N)
+    array_position[0] = y0
+    previous_velocity = initial_velocity_y_ms
+    # Euler method no resistance
+    for i in range(1, N):
+        current_velocity = previous_velocity + acceleration_y_ms2 * TIME_STEP
+        array_position[i] = array_position[i - 1] + current_velocity * TIME_STEP
+        previous_velocity = current_velocity
     return array_position
 
 

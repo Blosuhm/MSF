@@ -1,3 +1,5 @@
+"""Logarithmic Graph of Radioactive Isotope Activity"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 

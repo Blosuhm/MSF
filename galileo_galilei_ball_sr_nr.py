@@ -13,6 +13,8 @@ DISTANCE_CM = np.array([0.1, 1.4, 1.7, 6.5, 7.7, 10.4, 19.5, 26.1, 26.5, 45.9, 5
 def graph_data(ax):
     """Plots the data."""
     ax.plot(TIME_SEC, DISTANCE_CM, "o")
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("Distance (cm)")
 
 
 def graph_linear_regression(ax):
@@ -32,12 +34,14 @@ def graph_linear_regression(ax):
 
 
 def graph_data_log(ax):
-    """Plots the logorithm of the data."""
+    """Plots the logarithm of the data."""
     ax.plot(np.log(TIME_SEC), np.log(DISTANCE_CM), "o")
+    ax.set_xlabel("Logarithm of Time (s)")
+    ax.set_ylabel("Logarithm of Distance (cm)")
 
 
 def graph_linear_regression_log(ax):
-    """Plots the logorithm of the data and the linear regression line."""
+    """Plots the logarithm of the data and the linear regression line."""
     slope, intercept = np.polyfit(np.log(TIME_SEC), np.log(DISTANCE_CM), 1)
     delta_slope = get_delta_slope(
         np.log(TIME_SEC), np.log(DISTANCE_CM), slope, intercept
@@ -54,13 +58,43 @@ def graph_linear_regression_log(ax):
     ax.plot(np.log(TIME_SEC), slope * np.log(TIME_SEC) + intercept)
 
 
+def graph_data_not_linear(ax):
+    """Plots the data."""
+    ax.plot(np.power(TIME_SEC, 2.011), DISTANCE_CM, "o")
+    ax.set_xlabel("Time to the power of 2.011 (s)")
+    ax.set_ylabel("Distance (cm)")
+
+
+def graph_linear_regression_not_linear(ax):
+    """Plots the data and the linear regression line."""
+    slope, intercept = np.polyfit(np.power(TIME_SEC, 2.011), DISTANCE_CM, 1)
+    delta_slope = get_delta_slope(
+        np.power(TIME_SEC, 2.011), DISTANCE_CM, slope, intercept
+    )
+    delta_intercept = get_delta_intercept(np.power(TIME_SEC, 2.011), delta_slope)
+    r_squared = get_r_squared(np.power(TIME_SEC, 2.011), DISTANCE_CM, slope, intercept)
+
+    print(f"Slope: {slope:.3f} +/- {delta_slope:.3f}")
+    print(f"Intercept: {intercept:.3f} +/- {delta_intercept:.3f}")
+    print(f"R-squared: {r_squared:.3f}")
+
+    # use the formula for a line to plot
+
+    ax.plot(np.power(TIME_SEC, 2.011), slope * np.power(TIME_SEC, 2.011) + intercept)
+
+
 def main():
     """Main function."""
-    fig, (ax1, ax2) = plt.subplots(ncols=2, nrows=1)
+    fig, (ax1, ax2, ax3) = plt.subplots(ncols=3, nrows=1)
     graph_data(ax1)
     graph_linear_regression(ax1)
+    print()
     graph_data_log(ax2)
     graph_linear_regression_log(ax2)
+    print()
+    graph_data_not_linear(ax3)
+    graph_linear_regression_not_linear(ax3)
+
     plt.show()
 
 
