@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import euler_method, graph_all, get_axis
+from utils import euler_method, graph_all, get_axis, default_ax
 
 
 def horse2watt(horsepower):
@@ -8,12 +8,12 @@ def horse2watt(horsepower):
 
 
 # Constants
-
 GRAVITY = 9.81
 RESISTANCE_COEFFICIENT = 0.9
 FRONTAL_AREA = 0.3
 AIR_DENSITY = 1.225
 FRICTION_COEFFICIENT = 0.004
+RAMP_ANGLE = np.deg2rad(5)
 
 # Variables
 power = horse2watt(0.4)
@@ -25,8 +25,8 @@ initial_velocity_x = np.array([1, 0, 0])
 initial_acceleration_x = np.array([power / (mass * initial_velocity_x[0]), 0, 0])
 
 # Time
-TIME_STEP = 0.001
-TIME_START, TIME_END = 0, 200
+TIME_STEP = 0.005
+TIME_START, TIME_END = 0, 1000
 TIME = np.arange(TIME_START, TIME_END, TIME_STEP)
 N = len(TIME)
 
@@ -36,13 +36,14 @@ def acceleration_formula(a, velocity):
     abs_velocity = abs(vx)
     abs_velocity_sqrd = abs_velocity * vx
 
-    acceleration_x = (
-        power / (mass * vx)
-        - (RESISTANCE_COEFFICIENT * FRONTAL_AREA * AIR_DENSITY * abs_velocity_sqrd)
-        / (2 * mass)
-        - (FRICTION_COEFFICIENT * GRAVITY)
-    )
+    cyclist_acceleration = power / (mass * vx)
+    gravity_drag = -np.sin(RAMP_ANGLE) * GRAVITY
+    rolling_friction = -np.cos(RAMP_ANGLE) * GRAVITY * FRICTION_COEFFICIENT
+    air_drag = -(
+        RESISTANCE_COEFFICIENT * FRONTAL_AREA * AIR_DENSITY * abs_velocity_sqrd
+    ) / (2 * mass)
 
+    acceleration_x = cyclist_acceleration + gravity_drag + rolling_friction + air_drag
     acceleration = np.array([acceleration_x, 0, 0])
 
     return acceleration
@@ -59,14 +60,13 @@ def main():
         cromer=True,
     )
 
-    px = get_axis(p, 0)
-    vx = get_axis(v, 0)
-    ax = get_axis(a, 0)
-    arrays = [px, vx, ax]
+    p_x = get_axis(p, 0)
+    v_x = get_axis(v, 0)
+    a_x = get_axis(a, 0)
 
-    fig, ax = plt.subplots(1, 3, figsize=(16, 8))
+    array = np.array([p_x, v_x, a_x])
 
-    graph_all(ax, TIME, arrays, ["Position", "Velocity", "Acceleration"], grid=False)
+    graph_all(default_ax, TIME, array, ["Position", "Velocity", "Acceleration"])
 
     plt.show()
 

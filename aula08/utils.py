@@ -2,13 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+fig, default_ax = plt.subplots(1, 3, figsize=(16, 8))
+
+
 def euler_method(
     time_array,
     time_step,
     *,
-    initial_acceleration=0,
-    initial_velocity=0,
-    initial_position=0,
+    initial_acceleration=np.array([0, 0, 0]),
+    initial_velocity=np.array([0, 0, 0]),
+    initial_position=np.array([0, 0, 0]),
     acceleration_formula=lambda a, v: a,
     cromer=False
 ):
@@ -49,9 +52,10 @@ def euler_method(
         Array of positions.
     """
     n = len(time_array)
-    acceleration_array = np.zeros(n)
-    velocity_array = np.zeros(n)
-    position_array = np.zeros(n)
+
+    acceleration_array = np.array([np.zeros(3)] * n)
+    velocity_array = np.array([np.zeros(3)] * n)
+    position_array = np.array([np.zeros(3)] * n)
 
     acceleration_array[0] = initial_acceleration
     velocity_array[0] = initial_velocity
@@ -69,7 +73,7 @@ def euler_method(
             position_array[i] + velocity_array[cromer_index] * time_step
         )
 
-    return acceleration_array, velocity_array, position_array
+    return position_array, velocity_array, acceleration_array
 
 
 def graph(ax, time_array, array, title, *, x_label=None, y_label=None, grid=False):
@@ -133,3 +137,20 @@ def graph_all(
 
     for ax, array, title, x_label, y_label in zip(*to_zip):
         graph(ax, time_array, array, title, x_label=x_label, y_label=y_label, grid=grid)
+
+
+def get_axis(array, axis):
+    """
+    Get an axis from an array.
+
+    Parameters
+    ----------
+    array : array_like
+
+    axis : int
+
+    Returns
+    -------
+    axis_array : list
+    """
+    return list(zip(*array))[axis]
