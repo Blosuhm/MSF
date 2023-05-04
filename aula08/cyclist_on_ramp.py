@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import euler_method, graph_all, get_axis, default_ax
+from utils import euler_method, graph_all, get_axis
 
 
 def horse2watt(horsepower):
@@ -25,8 +25,8 @@ initial_velocity_x = np.array([1, 0, 0])
 initial_acceleration_x = np.array([power / (mass * initial_velocity_x[0]), 0, 0])
 
 # Time
-TIME_STEP = 0.005
-TIME_START, TIME_END = 0, 1000
+TIME_STEP = 0.0025
+TIME_START, TIME_END = 0, 500
 TIME = np.arange(TIME_START, TIME_END, TIME_STEP)
 N = len(TIME)
 
@@ -66,7 +66,9 @@ def main():
 
     array = np.array([p_x, v_x, a_x])
 
-    graph_all(default_ax, TIME, array, ["Position", "Velocity", "Acceleration"])
+    fig, ax = plt.subplots(1, 3, figsize=(16, 8))
+
+    graph_all(ax, TIME, array, ["Position", "Velocity", "Acceleration"])
 
     plt.show()
 

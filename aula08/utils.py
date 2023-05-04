@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-fig, default_ax = plt.subplots(1, 3, figsize=(16, 8))
+# fig, default_ax = plt.subplots(1, 3, figsize=(16, 8))
 
 
 def euler_method(
