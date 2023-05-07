@@ -9,10 +9,10 @@ def euler_method(
     time_array,
     time_step,
     *,
-    initial_acceleration=np.array([0, 0, 0]),
-    initial_velocity=np.array([0, 0, 0]),
-    initial_position=np.array([0, 0, 0]),
-    acceleration_formula=lambda a, v: a,
+    initial_acceleration=np.zeros(3),
+    initial_velocity=np.zeros(3),
+    initial_position=np.zeros(3),
+    acceleration_formula=lambda a, v, p: a,
     cromer=False
 ):
     """
@@ -53,9 +53,9 @@ def euler_method(
     """
     n = len(time_array)
 
-    acceleration_array = np.array([np.zeros(3)] * n)
-    velocity_array = np.array([np.zeros(3)] * n)
-    position_array = np.array([np.zeros(3)] * n)
+    acceleration_array = np.zeros((n, 3))
+    velocity_array = np.zeros((n, 3))
+    position_array = np.zeros((n, 3))
 
     acceleration_array[0] = initial_acceleration
     velocity_array[0] = initial_velocity
@@ -63,7 +63,7 @@ def euler_method(
 
     for i in range(n - 1):
         acceleration_array[i + 1] = acceleration_formula(
-            acceleration_array[i], velocity_array[i]
+            acceleration_array[i], velocity_array[i], position_array[i]
         )
 
         velocity_array[i + 1] = velocity_array[i] + acceleration_array[i] * time_step
@@ -127,6 +127,7 @@ def graph_all(
 
     grid : bool, optional
     """
+    # Ignore this cuz its just stupid
     if x_label_array is None:
         x_label_array = [None] * len(array_array)
 

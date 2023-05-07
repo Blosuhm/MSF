@@ -1,6 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from utils import euler_method, graph_all, get_axis
+from formulas import (
+    power2force,
+    force2acceleration,
+    air_resistance_force,
+    get_gravity_projections,
+    friction_force,
+)
 
 
 def horse2watt(horsepower):
@@ -31,7 +38,7 @@ TIME = np.arange(TIME_START, TIME_END, TIME_STEP)
 N = len(TIME)
 
 
-def acceleration_formula(a, velocity):
+def acceleration_formula(a, velocity, p):
     vx, vy, vz = velocity
     abs_velocity = abs(vx)
     abs_velocity_sqrd = abs_velocity * vx
@@ -48,6 +55,18 @@ def acceleration_formula(a, velocity):
     return acceleration
 
 
+def acceleration_formula2(a, velocity, p):
+    force = (
+        power2force(power, velocity)
+        + air_resistance_force(RESISTANCE_COEFFICIENT, FRONTAL_AREA, velocity)
+        + friction_force(velocity, FRICTION_COEFFICIENT, GRAVITY)
+    )
+
+    acceleration = force2acceleration(force, mass)
+
+    return acceleration
+
+
 def main():
     p, v, a = euler_method(
         TIME,
@@ -55,7 +74,7 @@ def main():
         initial_acceleration=initial_acceleration_x,
         initial_velocity=initial_velocity_x,
         initial_position=initial_position_x,
-        acceleration_formula=acceleration_formula,
+        acceleration_formula=acceleration_formula2,
         cromer=True,
     )
 
@@ -63,6 +82,8 @@ def main():
     vx = get_axis(v, 0)
     ax = get_axis(a, 0)
     arrays = [px, vx, ax]
+
+    print("Terminal velocity: ", np.max(vx))
 
     fig, ax = plt.subplots(1, 3, figsize=(16, 8))
 
