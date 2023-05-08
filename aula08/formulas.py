@@ -10,19 +10,30 @@ def air_resistance_force_with_vt(terminal_velocity, velocity, mass, *, gravity=G
     """Calculates the air resistance force.
 
     Args:
+    -----
         terminal_velocity (float): Terminal velocity.
+
         velocity (np.array): Velocity vector.
+
         mass (float): Mass of the object.
+
         gravity (float, optional): Gravity. Defaults to 9.81m/s².
 
+
     Formula:
+    --------
         F = -m * D * |v|² * û
 
         m = mass
+
         D = g / v_t²
+
         g = gravitational acceleration
+
         v_t = terminal velocity
+
         v = velocity vector
+
         û = unit vector of velocity
 
     """
@@ -38,17 +49,26 @@ def air_resistance_force(resistance_coefficient, area, velocity):
     """Calculates the air resistance force.
 
     Args:
+    -----
         resistance_coefficient (float): Resistance coefficient.
+
         area (float): Area of the object.
+
         velocity (np.array): Velocity vector.
 
+
     Formula:
+    --------
         F = -C_res/2 * A * p * |v|² * û
 
         C_res = resistance coefficient
+
         A = area
+
         p = air density
+
         v = velocity vector
+
         û = unit vector of velocity
 
     """
@@ -61,17 +81,26 @@ def newton_gravity_force(mass1, mass2, distance):
     """Calculates the gravitational force between two objects.
 
     Args:
+    -----
         mass1 (float): Mass of the first object.
+
         mass2 (float): Mass of the second object.
+
         distance (np.array): Distance vector between the two objects.
 
+
     Formula:
+    --------
         F = G * m1 * m2 / |r|² * û
 
         G = gravitational constant
+
         m1 = mass of the first object
+
         m2 = mass of the second object
+
         r = distance vector between the two objects
+
         û = unit vector of the distance vector
 
     """
@@ -85,13 +114,18 @@ def weight(mass, *, gravity=GRAVITY):
     """Calculates the weight of an object.
 
     Args:
+    -----
         mass (float): Mass of the object.
+
         gravity (float, optional): Gravity. Defaults to 9.81m/s².
 
+
     Formula:
+    --------
         P = m * g
 
         m = mass
+
         g = gravitational acceleration
 
     """
@@ -102,17 +136,26 @@ def electrostatic_force(charge1, charge2, distance):
     """Calculates the electrostatic force between two objects.
 
     Args:
+    -----
         charge1 (float): Charge of the first object.
+
         charge2 (float): Charge of the second object.
+
         distance (np.array): Distance vector between the two objects.
 
+
     Formula:
+    --------
         F = K * q1 * q2 / |r|² * û
 
         K = Coulomb's constant
+
         q1 = charge of the first object
+
         q2 = charge of the second object
+
         r = distance vector between the two objects
+
         û = unit vector of the distance vector
 
     """
@@ -127,15 +170,22 @@ def magnetic_force(charge, velocity, magnetic_field):
     """Calculates the magnetic force on a moving charge.
 
     Args:
+    -----
         charge (float): Charge of the object.
+
         velocity (np.array): Velocity vector of the object.
+
         magnetic_field (np.array): Magnetic field vector.
 
+
     Formula:
+    --------
         F = q * v x B
 
         q = charge
+
         v = velocity vector
+
         B = magnetic field vector
 
         (Note: "x" is the cross product)
@@ -148,19 +198,30 @@ def magnus_force(section_area, air_density, radius, rotation_vector, velocity):
     """Calculates the Magnus force on a rotating object.
 
     Args:
+    -----
         section_area (float): Section area of the object.
+
         air_density (float): Air density.
+
         radius (float): Radius of the object.
+
         rotation_vector (np.array): Rotation vector of the object.
+
         velocity (np.array): Velocity vector of the object.
 
+
     Formula:
+    --------
         F = 1/2 * A * p * r * w x v
 
         A = section area
+
         p = air density
+
         r = radius
+
         w = rotation vector
+
         v = velocity vector
 
     """
@@ -171,15 +232,22 @@ def friction_force(friction_coefficient, normal_force, velocity):
     """Calculates the friction force.
 
     Args:
-        velocity (np.array): Velocity vector.
+    -----
         friction_coefficient (float): Friction coefficient.
+
         normal_force (np.array): Normal force vector.
 
+        velocity (np.array): Velocity vector.
+
+
     Formula:
+    --------
         F = -mu * |N| * û
 
         mu = friction coefficient
+
         N = normal force vector
+
         û = unit vector of the velocity vector
 
     """
@@ -194,17 +262,26 @@ def get_gravity_projections(inclination, mass, *, gravity=GRAVITY, degrees=False
     """Calculates the projections of the gravity vector.
 
     Args:
+    -----
         inclination (float): Inclination of the gravity vector.
+
         mass (float): Mass of the object.
+
         gravity (float, optional): Gravity. Defaults to 9.81m/s².
+
         degrees (bool, optional): If the inclination is in degrees. Defaults to False.
 
+
     Formula:
+    --------
         Px = m * g * cos(θ)
+
         Py = m * g * sin(θ)
 
         m = mass
+
         g = gravitational acceleration
+
         θ = inclination
 
     """
@@ -220,13 +297,18 @@ def power2force(power, velocity):
     """Calculates the force of an object.
 
     Args:
+    -----
         power (float): Power of the object.
+
         velocity (np.array): Velocity vector.
 
+
     Formula:
+    --------
         F = P / |v|
 
         P = power
+
         v = velocity vector
 
     """
@@ -239,13 +321,18 @@ def force2acceleration(force, mass):
     """Calculates the acceleration of an object.
 
     Args:
+    -----
         force (np.array): Force vector.
+
         mass (float): Mass of the object.
 
+
     Formula:
+    --------
         a = F / m
 
         F = force vector
+
         m = mass
 
     """

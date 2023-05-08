@@ -155,3 +155,80 @@ def get_axis(array, axis):
     axis_array : list
     """
     return list(zip(*array))[axis]
+
+
+def find_instant(array, time_array, value):
+    """
+    Find the instant of a value in an array.
+
+    Parameters
+    ----------
+    array : array_like
+
+    value : float
+
+    Returns
+    -------
+    instant : float
+    """
+    idx = -1
+    for i, v in enumerate(array):
+        if v == 0 or (v - value) * (array[i + 1] - value) < 0:
+            idx = i
+            break
+
+    if idx == -1:
+        return None
+
+    closest = min(array[idx], array[idx + 1], key=lambda x: abs(x - value))
+    time = time_array[idx]
+
+    return time, closest
+
+
+def time2index(array, time_step, time):
+    """
+    Convert time to index.
+
+    Parameters
+    ----------
+    array : array_like
+
+    time_step : float
+
+    time : float
+
+    Returns
+    -------
+    value : float
+
+    time_idx : int
+    """
+
+    time_idx = int(np.ceil(time / time_step))
+    value = array[time_idx]
+
+    return value, time_idx
+
+
+def find_max(array, time_array):
+    """
+    Find the maximum value in an array.
+
+    Parameters
+    ----------
+    array : array_like
+
+    time_array : array_like
+
+    Returns
+    -------
+    time : float
+
+    value : float
+    """
+    idx = np.argmax(array)
+    time = time_array[idx]
+    value = array[idx]
+
+    return time, value
