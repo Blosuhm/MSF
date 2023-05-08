@@ -424,3 +424,23 @@ def gravitational_potential_energy(mass, height, *, gravity=GRAVITY):
     """
 
     return mass * height * gravity
+
+
+def horse2watt(horse):
+    """Converts horse power to watt.
+
+    Args:
+    -----
+        horse (float): Horse power.
+
+
+    Formula:
+    --------
+        W = 745.7 * HP
+
+        W = watt
+
+        HP = horse power
+
+    """
+    return 735.5 * horse

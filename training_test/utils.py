@@ -286,6 +286,8 @@ def find_index(array, value):
     """
     idx = -1
     for i, v in enumerate(array):
+        if i == len(array) - 1:
+            break
         if v == value or (v - value) * (array[i + 1] - value) < 0:
             idx = i
             break
