@@ -15,7 +15,7 @@ from formulas import (
 angle = np.deg2rad(10)
 mass = 57e-3  # kg
 
-array_air_resistance_work = []
+array_air_resistance_work = [0]
 
 
 def acceleration_formula(a, v, p):
@@ -24,7 +24,7 @@ def acceleration_formula(a, v, p):
     force = air_resistance + gravity
     acceleration = force2acceleration(force, mass)
 
-    array_air_resistance_work.append(air_resistance)
+    array_air_resistance_work.append(air_resistance * v)
     return acceleration
 
 
@@ -37,11 +37,11 @@ initial_velocity_x, initial_velocity_y = get_x_y_components(
 
 initial_position = np.array([0, 0, 0])
 initial_velocity = np.array([initial_velocity_x, initial_velocity_y, 0])
-initial_acceleration = acceleration_formula(0, initial_velocity, 0)
+initial_acceleration = np.array([0, -GRAVITY, 0])
 
 # Time
 
-TIME_STEP = 0.000001
+TIME_STEP = 0.00001
 START_TIME, END_TIME = 0, 0.8
 TIME = np.arange(START_TIME, END_TIME, TIME_STEP)
 N = TIME.size
@@ -77,11 +77,11 @@ def main():
 
     _, idx04 = time2index(array_air_resistance_work, TIME_STEP, 0.4)
 
-    t0 = trapezoidal_integral(array_air_resistance_work, 0, TIME_STEP)
-    t04 = trapezoidal_integral(array_air_resistance_work, idx04, TIME_STEP)
-    t08 = trapezoidal_integral(array_air_resistance_work, N, TIME_STEP)
+    t1 = -trapezoidal_integral(array_air_resistance_work, 1, TIME_STEP)
+    t2 = -trapezoidal_integral(array_air_resistance_work, idx04, TIME_STEP)
+    t3 = -trapezoidal_integral(array_air_resistance_work, N, TIME_STEP)
 
-    print(f"c)\nt0 -> {t0}\nt0.4 -> {t04}\nt0.8 -> {t08}")
+    print(f"c)\nt1 -> {t1}\nt2 -> {t2}\nt3 -> {t3}")
 
     graph(
         ax0,
@@ -123,12 +123,12 @@ def main():
         bx,
         TIME,
         mechanical_energy,
-        "Position x",
-        x_label="x (m)",
-        y_label="y (m)",
+        "Mechanical energy",
+        x_label="t (s)",
+        y_label="E (J)",
     )
 
-    # plt.show()
+    plt.show()
 
 
 if __name__ == "__main__":

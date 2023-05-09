@@ -365,8 +365,13 @@ def trapezoidal_integral(function_array, n, dt):
 
     """
 
+    print(len(function_array), n)
+
     for i, _ in enumerate(function_array):
         function_array[i] = np.linalg.norm(function_array[i])
+
+    print(len(function_array), n)
+    print(function_array[n - 1])
 
     return dt * (
         (function_array[0] + function_array[n - 1]) / 2
