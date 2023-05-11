@@ -52,6 +52,7 @@ def acceleration_formula(a, v, p):
     gravity_force = np.array([0, -f.GRAVITY * mass, 0])
     air_resistance_force = f.air_resistance_force_with_vt(u.kmh2ms(100), v, mass)
     magnus_force = f.magnus_force(area, radius, magnus_rotation, v)
+    print(magnus_force)
     force = gravity_force + air_resistance_force + magnus_force
 
     acceleration = f.force2acceleration(force, mass)

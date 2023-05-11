@@ -1,5 +1,7 @@
 import numpy as np
 
+#
+
 GRAVITY = 9.81
 AIR_DENSITY = 1.225
 G = 6.67408e-11
@@ -194,7 +196,9 @@ def magnetic_force(charge, velocity, magnetic_field):
     return charge * np.cross(velocity, magnetic_field)
 
 
-def magnus_force(section_area, air_density, radius, rotation_vector, velocity):
+def magnus_force(
+    section_area, radius, rotation_vector, velocity, *, air_density=AIR_DENSITY
+):
     """Calculates the Magnus force on a rotating object.
 
     Args:
@@ -398,6 +402,47 @@ def kinetic_energy(mass, velocity):
 
 
 def gravitational_potential_energy(mass, height, *, gravity=GRAVITY):
-    # TODO add documentation
+    """Calculates the gravitational potential energy of an object.
+
+    Args:
+    -----
+        mass (float): Mass of the object.
+
+        height (float): Height of the object.
+
+        gravity (float, optional): Gravity. Defaults to 9.81m/s².
+
+
+    Formula:
+    --------
+        E_p = m * h * g
+
+        m = mass
+
+        h = height
+
+        g = gravitational acceleration
+
+    """
 
     return mass * height * gravity
+
+
+def horse2watt(horse):
+    """Converts horse power to watt.
+
+    Args:
+    -----
+        horse (float): Horse power.
+
+
+    Formula:
+    --------
+        W = 745.7 * HP
+
+        W = watt
+
+        HP = horse power
+
+    """
+    return 735.5 * horse
